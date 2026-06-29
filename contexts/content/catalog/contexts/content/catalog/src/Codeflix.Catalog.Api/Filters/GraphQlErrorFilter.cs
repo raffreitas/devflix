@@ -1,4 +1,6 @@
-﻿namespace Codeflix.Catalog.Api.Filters;
+﻿using HotChocolate.Execution;
+
+namespace Codeflix.Catalog.Api.Filters;
 
 public sealed class GraphQlErrorFilter : IErrorFilter
 {

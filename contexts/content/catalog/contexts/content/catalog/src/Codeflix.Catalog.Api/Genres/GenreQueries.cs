@@ -28,13 +28,10 @@ public sealed class GenreQueries
     public async Task<GenrePayload?> GetGenreAsync(
         Guid id,
         IResolverContext context,
+        IGenreByIdDataLoader genreById,
         [Service] IMediator mediator,
         CancellationToken cancellationToken = default)
     {
-        return await context.BatchDataLoader<Guid, GenrePayload>(async (keys, ct) =>
-        {
-            var result = await mediator.Send(new GetGenreByIdsInput(keys), ct);
-            return result.ToDictionary(x => x.Id, GenrePayload.FromGenreModelOutput);
-        }).LoadAsync(id, cancellationToken);
+        return await genreById.LoadAsync(id, cancellationToken);
     }
 }
