@@ -9,8 +9,6 @@ using Keycloak.AuthServices.Authentication;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 
-using Newtonsoft.Json;
-
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Codeflix.Catalog.EndToEndTests.Base;
@@ -144,8 +142,7 @@ public class ApiClient
             return route;
 
         var parametersJson = JsonSerializer.Serialize(queryStringObject, DefaultSerializerOptions);
-        var parametersDict = JsonConvert
-            .DeserializeObject<Dictionary<string, string>>(parametersJson);
+        var parametersDict = JsonSerializer.Deserialize<Dictionary<string, string>>(parametersJson);
 
         return QueryHelpers.AddQueryString(route, parametersDict!);
     }
