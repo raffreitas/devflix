@@ -1,0 +1,14 @@
+using Devflix.Content.Admin.Infra.Data.EF.Models;
+
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace Devflix.Content.Admin.Infra.Data.EF.Configurations;
+
+public class GenresCategoriesConfiguration : IEntityTypeConfiguration<GenresCategories>
+{
+    public void Configure(EntityTypeBuilder<GenresCategories> builder)
+    {
+        builder.HasKey(genresCategories => new { genresCategories.GenreId, genresCategories.CategoryId });
+    }
+}

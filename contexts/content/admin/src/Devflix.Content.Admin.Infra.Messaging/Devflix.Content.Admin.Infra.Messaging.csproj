@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Devflix.Content.Admin.Application\Devflix.Content.Admin.Application.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.12" />
+      <PackageReference Include="RabbitMQ.Client" Version="7.2.2" />
+    </ItemGroup>
+
+</Project>

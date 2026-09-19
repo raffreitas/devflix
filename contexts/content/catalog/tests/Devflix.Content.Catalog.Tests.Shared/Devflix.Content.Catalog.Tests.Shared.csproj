@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\Devflix.Content.Catalog.Application\Devflix.Content.Catalog.Application.csproj" />
+      <ProjectReference Include="..\..\src\Devflix.Content.Catalog.Infra.Data.ES\Devflix.Content.Catalog.Infra.Data.ES.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Bogus" Version="35.6.5" />
+    </ItemGroup>
+
+</Project>

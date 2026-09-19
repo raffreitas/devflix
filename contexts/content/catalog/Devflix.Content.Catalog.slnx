@@ -1,0 +1,25 @@
+<Solution>
+  <Folder Name="/sandbox/" />
+  <Folder Name="/sandbox/elk/">
+    <File Path="sandbox/elk/category_index.json" />
+    <File Path="sandbox/elk/docker-compose.yml" />
+    <File Path="sandbox/elk/genre_index.json" />
+  </Folder>
+  <Folder Name="/sandbox/kafka/">
+    <File Path="sandbox/kafka/docker-compose.yml" />
+    <File Path="sandbox/kafka/kafka-connect.http" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Devflix.Content.Catalog.Api/Devflix.Content.Catalog.Api.csproj" />
+    <Project Path="src/Devflix.Content.Catalog.Application/Devflix.Content.Catalog.Application.csproj" />
+    <Project Path="src/Devflix.Content.Catalog.Domain/Devflix.Content.Catalog.Domain.csproj" />
+    <Project Path="src/Devflix.Content.Catalog.Infra.Data.ES/Devflix.Content.Catalog.Infra.Data.ES.csproj" />
+    <Project Path="src/Devflix.Content.Catalog.Infra.Messaging/Devflix.Content.Catalog.Infra.Messaging.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Devflix.Content.Catalog.E2ETests/Devflix.Content.Catalog.E2ETests.csproj" />
+    <Project Path="tests/Devflix.Content.Catalog.IntegrationTests/Devflix.Content.Catalog.IntegrationTests.csproj" />
+    <Project Path="tests/Devflix.Content.Catalog.Tests.Shared/Devflix.Content.Catalog.Tests.Shared.csproj" />
+    <Project Path="tests/Devflix.Content.Catalog.UnitTest/Devflix.Content.Catalog.UnitTests.csproj" />
+  </Folder>
+</Solution>

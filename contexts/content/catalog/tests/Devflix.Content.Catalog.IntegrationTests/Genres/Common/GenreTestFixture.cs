@@ -1,0 +1,36 @@
+using Devflix.Content.Catalog.IntegrationTests.Common;
+
+using Elastic.Clients.Elasticsearch;
+
+using Devflix.Content.Catalog.Domain.Entities;
+using Devflix.Content.Catalog.Infra.Data.ES.Models;
+using Devflix.Content.Catalog.Tests.Shared;
+
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Devflix.Content.Catalog.IntegrationTests.Genres.Common;
+
+public class GenreTestFixture : BaseFixture, IDisposable
+{
+    public GenreDataGenerator DataGenerator { get; } = new();
+    public readonly ElasticsearchClient ElasticClient;
+
+    public GenreTestFixture()
+    {
+        ElasticClient = ServiceProvider.GetRequiredService<ElasticsearchClient>();
+        ElasticClient.CreateGenreIndexAsync().GetAwaiter().GetResult();
+    }
+
+    public Genre GetValidGenre() => DataGenerator.GetValidGenre();
+
+    public IList<GenreModel> GetGenreModelList(int length = 10) => DataGenerator.GetGenreModelList(length).ToList();
+
+    public void DeleteAll() => ElasticClient.DeleteDocuments<GenreModel>();
+
+    public void Dispose() => ElasticClient.DeleteGenreIndex();
+}
+
+[CollectionDefinition(nameof(GenreTestFixture))]
+public class GenreTestFixtureCollection : ICollectionFixture<GenreTestFixture>
+{
+}

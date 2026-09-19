@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="HotChocolate.AspNetCore" Version="16.3.0" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.9" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Devflix.Content.Catalog.Application\Devflix.Content.Catalog.Application.csproj" />
+      <ProjectReference Include="..\Devflix.Content.Catalog.Infra.Data.ES\Devflix.Content.Catalog.Infra.Data.ES.csproj" />
+      <ProjectReference Include="..\Devflix.Content.Catalog.Infra.Messaging\Devflix.Content.Catalog.Infra.Messaging.csproj" />
+    </ItemGroup>
+
+</Project>
