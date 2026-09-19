@@ -28,7 +28,7 @@ public static class ControllersConfiguration
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(options =>
         {
-            options.SwaggerDoc("v1", new OpenApiInfo { Title = "FC3 Codeflix Catalog", Version = "v1" });
+            options.SwaggerDoc("v1", new OpenApiInfo { Title = "Devflix Content Admin", Version = "v1" });
             options.AddSecurityDefinition("Bearer",
                 new OpenApiSecurityScheme
                 {

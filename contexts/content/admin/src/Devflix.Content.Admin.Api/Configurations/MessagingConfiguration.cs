@@ -52,14 +52,14 @@ public static class MessagingConfiguration
         services.AddSingleton<ProducerConnection>(sp =>
         {
             var factory = sp.GetRequiredService<ConnectionFactory>();
-            var connection = factory.CreateConnectionAsync("codeflix-catalog-producer").GetAwaiter().GetResult();
+            var connection = factory.CreateConnectionAsync("devflix-content-admin-producer").GetAwaiter().GetResult();
             return new ProducerConnection(connection);
         });
 
         services.AddSingleton<ConsumerConnection>(sp =>
         {
             var factory = sp.GetRequiredService<ConnectionFactory>();
-            var connection = factory.CreateConnectionAsync("codeflix-catalog-consumer").GetAwaiter().GetResult();
+            var connection = factory.CreateConnectionAsync("devflix-content-admin-consumer").GetAwaiter().GetResult();
             return new ConsumerConnection(connection);
         });
 

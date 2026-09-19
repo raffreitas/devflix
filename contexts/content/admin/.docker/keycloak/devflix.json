@@ -1,6 +1,6 @@
 {
     "id": "9771193a-f10a-4db5-bfb5-c2c4a4887f22",
-    "realm": "fc3-codeflix",
+    "realm": "devflix",
     "notBefore": 1757858882,
     "defaultSignatureAlgorithm": "RS256",
     "revokeRefreshToken": false,
@@ -58,7 +58,7 @@
             },
             {
                 "id": "8f0e984c-f2a2-4b86-ab4b-f92343733936",
-                "name": "default-roles-fc3-codeflix",
+                "name": "default-roles-devflix",
                 "description": "${role_default-roles}",
                 "composite": true,
                 "composites": {
@@ -492,7 +492,7 @@
     ],
     "defaultRole": {
         "id": "8f0e984c-f2a2-4b86-ab4b-f92343733936",
-        "name": "default-roles-fc3-codeflix",
+        "name": "default-roles-devflix",
         "description": "${role_default-roles}",
         "composite": true,
         "clientRole": false,
@@ -566,7 +566,7 @@
             "disableableCredentialTypes": [],
             "requiredActions": [],
             "realmRoles": [
-                "default-roles-fc3-codeflix"
+                "default-roles-devflix"
             ],
             "notBefore": 0,
             "groups": [
@@ -596,7 +596,7 @@
             "disableableCredentialTypes": [],
             "requiredActions": [],
             "realmRoles": [
-                "default-roles-fc3-codeflix"
+                "default-roles-devflix"
             ],
             "notBefore": 0,
             "groups": [
@@ -615,7 +615,7 @@
             "disableableCredentialTypes": [],
             "requiredActions": [],
             "realmRoles": [
-                "default-roles-fc3-codeflix"
+                "default-roles-devflix"
             ],
             "notBefore": 0,
             "groups": []
@@ -643,7 +643,7 @@
             "disableableCredentialTypes": [],
             "requiredActions": [],
             "realmRoles": [
-                "default-roles-fc3-codeflix"
+                "default-roles-devflix"
             ],
             "notBefore": 0,
             "groups": []
@@ -671,7 +671,7 @@
             "disableableCredentialTypes": [],
             "requiredActions": [],
             "realmRoles": [
-                "default-roles-fc3-codeflix"
+                "default-roles-devflix"
             ],
             "notBefore": 0,
             "groups": [
@@ -704,13 +704,13 @@
             "clientId": "account",
             "name": "${client_account}",
             "rootUrl": "${authBaseUrl}",
-            "baseUrl": "/realms/fc3-codeflix/account/",
+            "baseUrl": "/realms/devflix/account/",
             "surrogateAuthRequired": false,
             "enabled": true,
             "alwaysDisplayInConsole": false,
             "clientAuthenticatorType": "client-secret",
             "redirectUris": [
-                "/realms/fc3-codeflix/account/*"
+                "/realms/devflix/account/*"
             ],
             "webOrigins": [],
             "notBefore": 0,
@@ -751,13 +751,13 @@
             "clientId": "account-console",
             "name": "${client_account-console}",
             "rootUrl": "${authBaseUrl}",
-            "baseUrl": "/realms/fc3-codeflix/account/",
+            "baseUrl": "/realms/devflix/account/",
             "surrogateAuthRequired": false,
             "enabled": true,
             "alwaysDisplayInConsole": false,
             "clientAuthenticatorType": "client-secret",
             "redirectUris": [
-                "/realms/fc3-codeflix/account/*"
+                "/realms/devflix/account/*"
             ],
             "webOrigins": [],
             "notBefore": 0,
@@ -1011,13 +1011,13 @@
             "clientId": "security-admin-console",
             "name": "${client_security-admin-console}",
             "rootUrl": "${authAdminUrl}",
-            "baseUrl": "/admin/fc3-codeflix/console/",
+            "baseUrl": "/admin/devflix/console/",
             "surrogateAuthRequired": false,
             "enabled": true,
             "alwaysDisplayInConsole": false,
             "clientAuthenticatorType": "client-secret",
             "redirectUris": [
-                "/admin/fc3-codeflix/console/*"
+                "/admin/devflix/console/*"
             ],
             "webOrigins": [
                 "+"

@@ -3,20 +3,20 @@ POST http://localhost:8083/connectors
 Content-Type: application/json
 
 {
-  "name": "catalog-admin",
+  "name": "content-admin",
   "config": {
-    "name": "catalog-admin",
+    "name": "content-admin",
     "connector.class": "io.debezium.connector.mysql.MySqlConnector",
     "tasks.max": "1",
-    "database.hostname": "codeflix.catalog.db",
+    "database.hostname": "devflix.content.admin.db",
     "database.port": "3306",
     "database.user": "root",
     "database.password": "root",
     "database.server.id": "184054",
-    "topic.prefix": "catalogadmin",
-    "database.include.list": "catalog",
+    "topic.prefix": "contentadmin",
+    "database.include.list": "content",
     "schema.history.internal.kafka.bootstrap.servers": "kafka:29092",
-    "schema.history.internal.kafka.topic": "schema-changes.catalog",
+    "schema.history.internal.kafka.topic": "schema-changes.content.admin.admin",
     "snapshot.mode": "when_needed",
     "tombstones.on.delete": false
   }
@@ -27,42 +27,42 @@ PUT http://localhost:8083/connectors
 Content-Type: application/json
 
 {
-  "name": "catalog-admin",
+  "name": "content-admin",
   "connector.class": "io.debezium.connector.mysql.MySqlConnector",
   "tasks.max": "1",
-  "database.hostname": "codeflix.catalog.db",
+  "database.hostname": "devflix.content.admin.db",
   "database.port": "3306",
   "database.user": "root",
   "database.password": "root",
   "database.server.id": "184054",
-  "topic.prefix": "catalogadmin",
-  "database.include.list": "catalog",
+  "topic.prefix": "contentadmin",
+  "database.include.list": "content",
   "schema.history.internal.kafka.bootstrap.servers": "kafka:29092",
-  "schema.history.internal.kafka.topic": "schema-changes.catalog",
+  "schema.history.internal.kafka.topic": "schema-changes.content.admin",
   "snapshot.mode": "when_needed",
   "tombstones.on.delete": false
 }
 
 ### DELETE Delete connector
-DELETE http://localhost:8083/connectors/catalog-admin
+DELETE http://localhost:8083/connectors/content-admin
 
 ### PUT Validate Config
 PUT http://localhost:8083/connector-plugins/MySqlConnector/config/validate
 Content-Type: application/json
 
 {
-  "name": "catalog-admin",
+  "name": "content-admin",
   "connector.class": "io.debezium.connector.mysql.MySqlConnector",
   "tasks.max": "1",
-  "database.hostname": "codeflix.catalog.db",
+  "database.hostname": "devflix.content.admin.db",
   "database.port": "3306",
   "database.user": "root",
   "database.password": "root",
   "database.server.id": "184054",
-  "topic.prefix": "catalogadmin",
-  "database.include.list": "catalog",
+  "topic.prefix": "contentadmin",
+  "database.include.list": "content",
   "schema.history.internal.kafka.bootstrap.servers": "kafka:29092",
-  "schema.history.internal.kafka.topic": "schema-changes.catalog",
+  "schema.history.internal.kafka.topic": "schema-changes.content.admin",
   "snapshot.mode": "when_needed",
   "tombstones.on.delete": false
 }
