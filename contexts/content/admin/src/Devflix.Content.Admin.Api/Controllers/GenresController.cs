@@ -18,7 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Devflix.Content.Admin.Api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("genres")]
 [Authorize(Roles = $"{Roles.Genres},{Roles.Admin}")]
 public class GenresController(IMediator mediator) : ControllerBase
 {

@@ -16,15 +16,10 @@ public sealed class RabbitMqProducer(
 {
     private readonly string _exchange = options.Value.Exchange;
 
-    private readonly JsonSerializerOptions _jsonSerializerOptions = new()
-    {
-        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
-    };
-
     public async Task SendMessageAsync<T>(T message, CancellationToken cancellationToken = default)
     {
         var routingKey = EventsMapping.GetRoutingKey<T>();
-        var @event = JsonSerializer.SerializeToUtf8Bytes(message, _jsonSerializerOptions);
+        var @event = JsonSerializer.SerializeToUtf8Bytes(message);
         var channel = await channelManager.GetChannelAsync(cancellationToken);
 
         using var publishLock = await channelManager.AcquirePublishLockAsync(cancellationToken);

@@ -14,10 +14,6 @@ public static class ControllersConfiguration
             .AddControllers(options =>
             {
                 options.Filters.Add<ApiGlobalExceptionFilter>();
-            })
-            .AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower;
             });
         services.AddDocumentation();
         return services;

@@ -5,7 +5,6 @@ using Devflix.Content.Admin.Application.Exceptions;
 using Devflix.Content.Admin.Application.UseCases.Videos.UpdateMediaStatus;
 using Devflix.Content.Admin.Infra.Messaging.Configuration;
 using Devflix.Content.Admin.Infra.Messaging.DTOs;
-
 using Devflix.Content.Admin.Domain.Enum;
 using Devflix.Content.Admin.Domain.Exceptions;
 
@@ -29,9 +28,6 @@ public sealed class VideoEncodedEventConsumer(
 ) : BackgroundService
 {
     private readonly string _queue = configuration.Value.VideoEncodedQueue!;
-
-    private readonly JsonSerializerOptions _jsonOptions =
-        new() { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower };
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
@@ -58,7 +54,7 @@ public sealed class VideoEncodedEventConsumer(
 
             logger.LogDebug("Received Message: {Message}", messageString);
 
-            var message = JsonSerializer.Deserialize<VideoEncodedMessageDto>(messageString, _jsonOptions);
+            var message = JsonSerializer.Deserialize<VideoEncodedMessageDto>(messageString);
             var input = GetUpdateMediaStatusInput(message!);
             await mediator.Send(input, CancellationToken.None);
             await channel.BasicAckAsync(eventArgs.DeliveryTag, false);

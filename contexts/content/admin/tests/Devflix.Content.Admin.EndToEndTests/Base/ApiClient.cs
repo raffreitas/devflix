@@ -15,11 +15,6 @@ namespace Devflix.Content.Admin.EndToEndTests.Base;
 
 public class ApiClient
 {
-    private static readonly JsonSerializerOptions DefaultSerializerOptions = new()
-    {
-        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower, PropertyNameCaseInsensitive = true
-    };
-
     private readonly HttpClient _httpClient;
     private readonly KeycloakAuthenticationOptions _keycloakOptions;
     private readonly IConfiguration _configuration;
@@ -84,7 +79,7 @@ public class ApiClient
         var response = await _httpClient.PostAsync(
             route,
             new StringContent(
-                JsonSerializer.Serialize(payload, DefaultSerializerOptions),
+                JsonSerializer.Serialize(payload),
                 Encoding.UTF8,
                 "application/json"
             )
@@ -98,7 +93,7 @@ public class ApiClient
         var response = await _httpClient.PutAsync(
             route,
             new StringContent(
-                JsonSerializer.Serialize(payload, DefaultSerializerOptions),
+                JsonSerializer.Serialize(payload),
                 Encoding.UTF8,
                 "application/json"
             )
@@ -131,7 +126,7 @@ public class ApiClient
         TOutput? output = default;
 
         if (!string.IsNullOrWhiteSpace(outputString))
-            output = JsonSerializer.Deserialize<TOutput>(outputString, DefaultSerializerOptions);
+            output = JsonSerializer.Deserialize<TOutput>(outputString);
 
         return output;
     }
@@ -141,7 +136,7 @@ public class ApiClient
         if (queryStringObject is null)
             return route;
 
-        var parametersJson = JsonSerializer.Serialize(queryStringObject, DefaultSerializerOptions);
+        var parametersJson = JsonSerializer.Serialize(queryStringObject);
         var parametersDict = JsonSerializer.Deserialize<Dictionary<string, string>>(parametersJson);
 
         return QueryHelpers.AddQueryString(route, parametersDict!);

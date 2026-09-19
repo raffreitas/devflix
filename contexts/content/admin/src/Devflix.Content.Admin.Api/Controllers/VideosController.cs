@@ -1,7 +1,6 @@
 using Devflix.Content.Admin.Api.Authorization;
 using Devflix.Content.Admin.Api.Models.Responses;
 using Devflix.Content.Admin.Api.Models.Videos;
-
 using Devflix.Content.Admin.Application.UseCases.Videos.Common;
 using Devflix.Content.Admin.Application.UseCases.Videos.DeleteVideo;
 using Devflix.Content.Admin.Application.UseCases.Videos.GetVideo;
@@ -16,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Devflix.Content.Admin.Api.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("videos")]
 [Authorize(Policy = Policies.VideosManager)]
 public class VideosController(IMediator mediator) : ControllerBase
 {

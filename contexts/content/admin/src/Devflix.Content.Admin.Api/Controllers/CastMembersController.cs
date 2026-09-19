@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Devflix.Content.Admin.Api.Controllers;
 
 [ApiController]
-[Route("cast_members")]
+[Route("cast-members")]
 [Authorize(Roles = $"{Roles.CastMembers},{Roles.Admin}")]
 public class CastMembersController(IMediator mediator) : ControllerBase
 {

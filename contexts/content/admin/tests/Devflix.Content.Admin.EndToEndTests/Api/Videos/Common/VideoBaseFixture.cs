@@ -38,9 +38,7 @@ public sealed class VideoBaseFixture : GenreBaseFixture
     internal void PublishMessageToRabbitMQ(object exampleEvent)
     {
         var exchange = WebAppFactory.RabbitMQConfiguration.Exchange;
-        var jsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower };
-        var message = JsonSerializer.SerializeToUtf8Bytes(
-            exampleEvent, jsonOptions);
+        var message = JsonSerializer.SerializeToUtf8Bytes(exampleEvent);
         WebAppFactory.RabbitMQChannel!.BasicPublishAsync(
                 exchange: exchange,
                 routingKey: WebAppFactory.VideoEncodedRoutingKey,
@@ -59,8 +57,7 @@ public sealed class VideoBaseFixture : GenreBaseFixture
         if (consumingResult == null) return (null, 0);
         var rawMessage = consumingResult.Body.ToArray();
         var stringMessage = Encoding.UTF8.GetString(rawMessage);
-        var jsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower };
-        var @event = JsonSerializer.Deserialize<T>(stringMessage, jsonOptions);
+        var @event = JsonSerializer.Deserialize<T>(stringMessage);
         return (@event, consumingResult.MessageCount);
     }
 
