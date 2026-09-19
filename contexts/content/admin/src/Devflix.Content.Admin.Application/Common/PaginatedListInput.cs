@@ -1,6 +1,7 @@
 using Devflix.Content.Admin.Domain.SeedWork.SearcheableRepository;
 
 namespace Devflix.Content.Admin.Application.Common;
+
 public abstract record PaginatedListInput(
     int Page,
     int PerPage,

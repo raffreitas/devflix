@@ -1,14 +1,12 @@
 using Devflix.Content.Admin.Api.Configurations;
+using Devflix.Content.Admin.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-    .AddAppConnections(builder.Configuration)
-    .AddUseCases()
-    .AddRabbitMq(builder.Configuration)
-    .AddMessageProducer()
-    .AddMessageConsumer(builder.Configuration)
-    .AddStorage(builder.Configuration)
+    .AddInfrastructureConfiguration(builder.Configuration)
+    .AddBackgroundServiceConfiguration()
+    .AddApplicationConfiguration()
     .AddSecurity(builder.Configuration)
     .AddAndConfigureControllers();
 

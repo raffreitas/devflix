@@ -1,7 +1,6 @@
 using Devflix.Content.Admin.Api.Authorization;
 using Devflix.Content.Admin.Api.Models.CastMembers;
 using Devflix.Content.Admin.Api.Models.Responses;
-
 using Devflix.Content.Admin.Application.UseCases.CastMembers.Common;
 using Devflix.Content.Admin.Application.UseCases.CastMembers.CreateCastMember;
 using Devflix.Content.Admin.Application.UseCases.CastMembers.DeleteCastMember;
@@ -91,7 +90,10 @@ public class CastMembersController(IMediator mediator) : ControllerBase
         if (page is not null) input.Page = page.Value;
         if (perPage is not null) input.PerPage = perPage.Value;
         if (search is not null) input.Search = search;
-        if (dir is not null) input.Dir = dir.ToLower() == "asc" ? SearchOrder.Asc : SearchOrder.Desc;
+        if (dir is not null)
+            input.Dir = dir.Equals("asc", StringComparison.CurrentCultureIgnoreCase)
+                ? SearchOrder.Asc
+                : SearchOrder.Desc;
         if (sort is not null) input.Sort = sort;
         var output = await mediator.Send(input, cancellationToken);
         return Ok(new ApiResponseList<CastMemberModelOutput>(output));

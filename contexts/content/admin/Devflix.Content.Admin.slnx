@@ -1,8 +1,6 @@
 <Solution>
   <Folder Name="/env/">
     <File Path="docker-compose.yml" />
-    <File Path="keycloak-requests.http" />
-    <File Path=".github\workflows\ci.yml" />
   </Folder>
   <Folder Name="/src/">
     <Project Path="src/Devflix.Content.Admin.Api/Devflix.Content.Admin.Api.csproj" />

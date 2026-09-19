@@ -7,13 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="AWSSDK.S3" Version="4.0.103.3" />
-      <PackageReference Include="Azure.Storage.Blobs" Version="12.29.2" />
-      <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.12" />
+        <PackageReference Include="AWSSDK.S3" Version="4.0.103.3"/>
+        <PackageReference Include="Azure.Storage.Blobs" Version="12.29.2"/>
+        <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.12"/>
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.12"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Devflix.Content.Admin.Application\Devflix.Content.Admin.Application.csproj" />
+        <ProjectReference Include="..\Devflix.Content.Admin.Application\Devflix.Content.Admin.Application.csproj"/>
     </ItemGroup>
 
 </Project>

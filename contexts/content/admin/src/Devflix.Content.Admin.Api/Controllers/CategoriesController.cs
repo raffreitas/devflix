@@ -1,7 +1,6 @@
 using Devflix.Content.Admin.Api.Authorization;
 using Devflix.Content.Admin.Api.Models.Categories;
 using Devflix.Content.Admin.Api.Models.Responses;
-
 using Devflix.Content.Admin.Application.UseCases.Categories.Common;
 using Devflix.Content.Admin.Application.UseCases.Categories.CreateCategory;
 using Devflix.Content.Admin.Application.UseCases.Categories.DeleteCategory;
@@ -26,11 +25,11 @@ public class CategoriesController(IMediator mediator) : ControllerBase
     [ProducesResponseType<TestApiResponseList<CategoryModelOutput>>(StatusCodes.Status200OK)]
     public async Task<IActionResult> List(
         CancellationToken cancellationToken,
-       [FromQuery] int? page = null,
-       [FromQuery(Name = "per_page")] int? perPage = null,
-       [FromQuery] string? search = null,
-       [FromQuery] string? sort = null,
-       [FromQuery] SearchOrder? dir = null
+        [FromQuery] int? page = null,
+        [FromQuery(Name = "per_page")] int? perPage = null,
+        [FromQuery] string? search = null,
+        [FromQuery] string? sort = null,
+        [FromQuery] SearchOrder? dir = null
     )
     {
         var input = new ListCategoriesInput();
@@ -91,7 +90,7 @@ public class CategoriesController(IMediator mediator) : ControllerBase
     [ProducesResponseType<ApiResponse<CategoryModelOutput>>(StatusCodes.Status200OK)]
     [ProducesResponseType<ProblemDetails>(StatusCodes.Status400BadRequest)]
     [ProducesResponseType<ProblemDetails>(StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> Create(
+    public async Task<IActionResult> Update(
         [FromRoute] Guid id,
         [FromBody] UpdateCategoryApiInput apiInput,
         CancellationToken cancellationToken

@@ -1,4 +1,5 @@
 namespace Devflix.Content.Admin.Application.Exceptions;
+
 public class NotFoundException(string? message) : ApplicationException(message)
 {
     public static void ThrowIfNull(object? obj, string message)
