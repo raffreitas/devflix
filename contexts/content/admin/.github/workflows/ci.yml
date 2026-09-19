@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: fc-codeflix-catalog-admin
+  IMAGE_NAME: devflix-codeflix-catalog-admin
 
 jobs:
   tests:
