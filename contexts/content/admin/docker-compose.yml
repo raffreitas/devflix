@@ -1,49 +1,24 @@
+name: devflix.content.admin
+
 services:
-  catalogdb:
-    container_name: catalog.db
-    hostname: catalogdb
-    image: mysql
-    ports:
-      - "3306:3306"
+  devflix.content.admin:
+    container_name: devflix.content.admin
+    hostname: content.admin.db
+    image: postgres:18
     environment:
-      MYSQL_ROOT_PASSWORD: root
-  
-  rabbitmq:
-    container_name: adm_videos_rabbitmq
-    image: rabbitmq:4-management
-    hostname: rabbitmq
-    environment:
-      - RABBITMQ_DEFAULT_USER=adm_videos
-      - RABBITMQ_DEFAULT_PASS=123456
+      POSTGRES_USER: devflix-content
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: content-admin
     ports:
-      - "15672:15672"
-      - "5672:5672"
-  
-  azurite:
-    image: mcr.microsoft.com/azure-storage/azurite
-    container_name: adm_videos_azurite
-    ports:
-      - "10000:10000" # Blob service
-      - "10001:10001" # Queue service
-      - "10002:10002" # Table service
-  
-  keycloak:
-    container_name: adm_videos_keycloak
-    image: quay.io/keycloak/keycloak:latest
-    hostname: keycloak
-    restart: unless-stopped
-    environment:
-      - KEYCLOAK_ADMIN=admin
-      - KEYCLOAK_ADMIN_PASSWORD=admin
-      - KC_DB=mysql
-      - KC_DB_URL_HOST=catalogdb
-      - KC_DB_URL_PORT=3306
-      - KC_DB_SCHEMA=keycloak
-      - KC_DB_USERNAME=root
-      - KC_DB_PASSWORD=root
-    ports:
-      - "8443:8080"
-    command:
-      - start-dev
-    depends_on:
-      - catalogdb
+      - "54321:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - devflix.content.admin
+
+networks:
+  devflix.content.admin:
+    driver: bridge

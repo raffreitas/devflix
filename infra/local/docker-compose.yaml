@@ -1,0 +1,199 @@
+name: devflix.infra
+
+services:
+  devflix.rabbitmq:
+    container_name: devflix.rabbitmq
+    image: rabbitmq:4-management
+    hostname: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: devflix
+      RABBITMQ_DEFAULT_PASS: root
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    networks:
+      - devflix.content.admin
+      - devflix.content.catalog
+
+  devflix.azurite:
+    container_name: devflix.azurite
+    image: mcr.microsoft.com/azure-storage/azurite
+    ports:
+      - "10000:10000" # Blob service
+    networks:
+      - devflix.content.admin
+      - devflix.content.catalog
+
+  devflix.keycloak:
+    container_name: devflix.keycloak
+    image: quay.io/keycloak/keycloak:latest
+    hostname: keycloak
+    restart: unless-stopped
+    environment:
+      KEYCLOAK_ADMIN: devflix
+      KEYCLOAK_ADMIN_PASSWORD: root
+      KC_DB: postgres
+      KC_DB_URL_HOST: devflix.keycloak.db
+      KC_DB_URL_PORT: 5432
+      KC_DB_SCHEMA: public
+      KC_DB_USERNAME: devflix
+      KC_DB_PASSWORD: root
+    ports:
+      - "8443:8080"
+    command:
+      - start-dev
+    depends_on:
+      - devflix.keycloak.db
+    networks:
+      - devflix.content.admin
+      - devflix.content.catalog
+
+  devflix.keycloak.db:
+    container_name: devflix.keycloak.db
+    image: postgres:18
+    environment:
+      POSTGRES_USER: devflix
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: keycloak
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - devflix.content.admin
+      - devflix.content.catalog
+
+  devflix.elk.elasticsearch:
+    container_name: devflix.elk.es
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.1.2
+    restart: unless-stopped
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - devflix.content.admin
+      - devflix.content.catalog
+
+  devflix.kibana:
+    container_name: devflix.elk.kibana
+    image: docker.elastic.co/kibana/kibana:9.1.2
+    restart: unless-stopped
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_URL=http://devflix.elk.elasticsearch:9200
+    depends_on:
+      - devflix.elk.elasticsearch
+    networks:
+      - devflix.content.admin
+      - devflix.content.catalog
+
+  devflix.kafka:
+    container_name: devflix.kafka
+    hostname: kafka
+    image: confluentinc/cp-server:7.9.0
+    ports:
+      - "9092:9092"
+      - "9101:9101"
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_CONFLUENT_LICENSE_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CONFLUENT_BALANCER_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_JMX_PORT: 9101
+      KAFKA_JMX_HOSTNAME: localhost
+      #KAFKA_CONFLUENT_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      KAFKA_METRIC_REPORTERS: io.confluent.metrics.reporter.ConfluentMetricsReporter
+      CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: kafka:29092
+      CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
+      KAFKA_PROCESS_ROLES: "broker,controller"
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@kafka:29093"
+      KAFKA_LISTENERS: "PLAINTEXT://kafka:29092,CONTROLLER://kafka:29093,PLAINTEXT_HOST://0.0.0.0:9092"
+      KAFKA_INTER_BROKER_LISTENER_NAME: "PLAINTEXT"
+      KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
+      KAFKA_LOG_DIRS: "/tmp/kraft-combined-logs"
+      CONFLUENT_METRICS_ENABLE: "true"
+      CONFLUENT_SUPPORT_CUSTOMER_ID: "anonymous"
+      # Replace CLUSTER_ID with a unique base64 UUID using "bin/kafka-storage.sh random-uuid"
+      # See https://docs.confluent.io/kafka/operations-tools/kafka-tools.html#kafka-storage-sh
+      CLUSTER_ID: "MkU3OEVBNTcwNTJENDM2Qk"
+    healthcheck:
+      test: kafka-topics --bootstrap-server devflix.kafka:9092 --list
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - devflix.content.admin
+      - devflix.content.catalog
+
+  devflix.kafka.redpandadata:
+    container_name: devflix.kafka.redpandadata
+    image: docker.redpanda.com/redpandadata/console:v2.8.5
+    entrypoint: /bin/sh
+    command: -c "echo \"$$CONSOLE_CONFIG_FILE\" > /tmp/config.yml; /app/console"
+    environment:
+      CONFIG_FILEPATH: /tmp/config.yml
+      CONSOLE_CONFIG_FILE: |
+        kafka:
+          brokers: ["kafka:29092"]
+        connect:
+          enabled: true
+          clusters:
+            - name: "debezium"
+              url: "http://devflix.kafka.debezium:8083"
+    ports:
+      - 8080:8080
+    depends_on:
+      devflix.kafka:
+        condition: service_healthy
+    networks:
+      - devflix.content.admin
+      - devflix.content.catalog
+
+  devflix.kafka.debezium:
+    container_name: devflix.kafka.debezium
+    image: debezium/connect:3.0.0.Final
+    ports:
+      - "8083:8083"
+    environment:
+      BOOTSTRAP_SERVERS: kafka:29092
+      GROUP_ID: debezium-cluster
+      CONFIG_STORAGE_TOPIC: debezium-configs
+      OFFSET_STORAGE_TOPIC: debezium-offsets
+      STATUS_STORAGE_TOPIC: debezium-status
+      CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      STATUS_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_KEY_CONVERTER_SCHEMAS_ENABLE: false
+      CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE: false
+    depends_on:
+      devflix.kafka:
+        condition: service_healthy
+    healthcheck:
+      test: curl -f http://localhost:8083/connectors || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - devflix.content.admin
+      - devflix.content.catalog
+
+networks:
+  devflix.content.admin:
+    driver: bridge
+  devflix.content.catalog:
+    driver: bridge
+volumes:
+  kafka01:
