@@ -1,0 +1,10 @@
+using Bogus;
+
+namespace Devflix.Content.Admin.UnitTests.Common;
+
+public abstract class BaseFixture
+{
+    public Faker Faker { get; set; } = new(locale: "pt_BR");
+
+    public bool GetRandomBoolean() => Faker.Random.Bool();
+}

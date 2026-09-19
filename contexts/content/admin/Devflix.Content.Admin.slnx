@@ -1,0 +1,20 @@
+<Solution>
+  <Folder Name="/env/">
+    <File Path="docker-compose.yml" />
+    <File Path="keycloak-requests.http" />
+    <File Path=".github\workflows\ci.yml" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Devflix.Content.Admin.Api/Devflix.Content.Admin.Api.csproj" />
+    <Project Path="src/Devflix.Content.Admin.Application/Devflix.Content.Admin.Application.csproj" />
+    <Project Path="src/Devflix.Content.Admin.Domain/Devflix.Content.Admin.Domain.csproj" />
+    <Project Path="src/Devflix.Content.Admin.Infra.Data.EF/Devflix.Content.Admin.Infra.Data.EF.csproj" />
+    <Project Path="src/Devflix.Content.Admin.Infra.Messaging/Devflix.Content.Admin.Infra.Messaging.csproj" />
+    <Project Path="src/Devflix.Content.Admin.Infra.Storage/Devflix.Content.Admin.Infra.Storage.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Devflix.Content.Admin.EndToEndTests/Devflix.Content.Admin.EndToEndTests.csproj" />
+    <Project Path="tests/Devflix.Content.Admin.IntegrationTests/Devflix.Content.Admin.IntegrationTests.csproj" />
+    <Project Path="tests/Devflix.Content.Admin.UnitTests/Devflix.Content.Admin.UnitTests.csproj" />
+  </Folder>
+</Solution>
