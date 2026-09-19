@@ -1,5 +1,4 @@
-﻿using Codeflix.Catalog.Application.UseCases.Genres.GetGenresByIds;
-using Codeflix.Catalog.Application.UseCases.Genres.SearchGenre;
+﻿using Codeflix.Catalog.Application.UseCases.Genres.SearchGenre;
 using Codeflix.Catalog.Domain.Repositories.DTOs;
 
 using HotChocolate.Resolvers;
